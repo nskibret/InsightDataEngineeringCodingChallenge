@@ -5,24 +5,25 @@ Created on Sat Mar 30 10:44:16 2019
 
 @author: nskibret
 """
-import heapq as hq
 
-def k_most_frequent_elements(list_of_ints):
+class PurchaseAnalytics(object):
     
-    """Return the k most frequent elements.
-    
-    Input:
-        list_of_ints: a non empty list of integers
+    def __init__(self, input_dir, output_dir):
         
-    Output:
-             a list consisting of k most frequent elements in list_of_ints"""
+        self.input_dir = input_dir
+        self.output_dir = output_dir
+        
     
-    frequency_counts = {}
+    def read_data(self):
+        
     
-    for x in list_of_ints:
-        frequency_counts[x] = frequency_counts.get(x, 0) + 1
-      
-    k_frequent_elemts = []
+        
+        
+    def write_data(self):
+        
+        
+    
+    
     
     
     

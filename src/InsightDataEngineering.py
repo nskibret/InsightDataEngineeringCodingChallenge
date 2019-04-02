@@ -33,8 +33,11 @@ class PurchaseAnalytics(object):
         
         """
         
-        self.input_dir = input_dir # directory holding input data
-        self.output_dir = output_dir # directory to write output data to
+        # directory holding input data
+        self.input_dir = input_dir 
+        
+        # directory to write output data to
+        self.output_dir = output_dir 
         
         # path containing order products file (e.g. order_products.csv)
         self.order_products_input_file = os.path.join(self.input_dir, \
@@ -45,11 +48,11 @@ class PurchaseAnalytics(object):
         
         # define a dictionary to hold reading from product.csv file
         # product_id as the key and reorder field as value
-        self.__products = {}   
+        self._products = {}   
         
         # define a dictionary to hold reading from order_products.csv file
         # product_id as the key and department_id as value
-        self.__order_products = {}
+        self._order_products = {}
         
         # define a dictionary of lists
         # this will hold department_id as its key and 
@@ -71,7 +74,7 @@ class PurchaseAnalytics(object):
                 # we are interested only on second and last column 
                 # (i.e. product_id and reordered fields)
                 # convert reordered field to int
-                self.__order_products[row[1]] = int(row[-1][:-1]) 
+                self._order_products[row[1]] = int(row[-1][:-1]) 
            
             
         # 
@@ -84,7 +87,7 @@ class PurchaseAnalytics(object):
                 # we are interested only on the first and last column \
                 # (i.e. product_id and department_id fields)
                 # convert department_id field to integer, for sorting purpose
-                self.__products[row[0]] = int(row[3][:-1])       
+                self._products[row[0]] = int(row[3][:-1])       
             
        
         
@@ -120,9 +123,9 @@ class PurchaseAnalytics(object):
         
         """
         
-        for prod_id in self.__products:
-            department_id = self.__products[prod_id] 
-            is_reorder = self.__order_products[prod_id]
+        for prod_id in self._products:
+            department_id = self._products[prod_id] 
+            is_reorder = self._order_products[prod_id]
             
             if department_id in self.stat_per_department:
                 self.stat_per_department[department_id][0] += 1
@@ -161,12 +164,12 @@ class PurchaseAnalytics(object):
         """
         
         print("Product ID   Reordered")
-        for key in self.__order_products:
-            print(" {}:       {}".format(key, self.__order_products[key]))
+        for key in self._order_products:
+            print(" {}:       {}".format(key, self._order_products[key]))
             
         print("Product ID   Department ID")
-        for key in self.__products:
-            print(" {}:       {}".format(key, self.__products[key]))
+        for key in self._products:
+            print(" {}:       {}".format(key, self._products[key]))
             
         print("Department ID      n_order       n_first_time_order")
         for key in self.stat_per_department:

@@ -13,7 +13,8 @@ file1 = 'order_products.csv'
 file2 = 'products.csv'
 
 test = PurchaseAnalytics(file1, file2, './')
-test.read_data()
+test.read_purchase_data()
 test.find_order_statistics()
 test.calculate_percentage_values()
+test.write_data_to_disk()
 test.print_data()

@@ -20,14 +20,11 @@ order_product = 'order_products.csv'
 class TestPurchaseAnalytics(unittest.TestCase):
     
     def test_read_purchase_data(self):
-        # test if data
+        # test if data is read properly
         purchase = PurchaseAnalytics(input_dir, output_dir, order_product, product)
         purchase.read_purchase_data()
-        purchase.find_order_statistics
+        purchase.find_order_statistics()
         purchase.calculate_percentage_values()
-        print(purchase._products)
-        print(purchase._order_products)
-        print(purchase.stat_per_department)
         keys = list(purchase.stat_per_department.keys())
         values = list(purchase.stat_per_department.values())
         
@@ -38,6 +35,7 @@ class TestPurchaseAnalytics(unittest.TestCase):
         
         
     def test_data_written_to_disk(self):
+        # test if output written to disk
         purchase = PurchaseAnalytics(input_dir, output_dir, product, order_product)
         purchase.read_purchase_data()
         purchase.find_order_statistics

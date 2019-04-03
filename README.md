@@ -1,5 +1,5 @@
 # Purchase Analytics - Insight Data Engineering Coding Challenge
-This is the code repository for purchase analytics - insight data engineering coding challenge.
+This is the code repository for purchase analytics - insight data engineering coding challenge project.
 
 ## Introduction
 In this project, we will calculate 

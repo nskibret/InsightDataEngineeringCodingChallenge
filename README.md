@@ -7,7 +7,7 @@ In this project, we will calculate purchase statistics that includes
 - The number of times a product was requested for the first time, and
 - The ratio of those two numbers 
 
-for the Instacart data set published on “The Instacart Online Grocery Shopping Dataset 2017”, Accessed from https://www.instacart.com/datasets/grocery-shopping-2017 on 04/01/2019.
+for the Instacart data set published on “The Instacart Online Grocery Shopping Dataset 2017”, Accessed from https://www.instacart.com/datasets/grocery-shopping-2017 on 04/01/2019. The calculations are done for each department. 
 
 
 ## Technical Requirements

@@ -15,3 +15,7 @@ This project is developed using python 3.6 and requires the following libraries.
 - argparse
 - os
 
+## Run the Project
+To run the project use 
+```python3 ./src/run_purchase_analytics.py ./input ./output products.csv order_products.csv```
+

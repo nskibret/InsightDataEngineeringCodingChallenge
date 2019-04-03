@@ -74,7 +74,12 @@ class PurchaseAnalytics(object):
                 # we are interested only on second and last column 
                 # (i.e. product_id and reordered fields)
                 # convert reordered field to int
-                self._order_products[row[1]] = int(row[-1][:-1]) 
+                try: # catch if integer conversion fails
+                    self._order_products[row[1]] = int(row[-1][:-1]) 
+                
+                except ValueError:
+                    continue # continue reading next line
+                
            
             
         # 
@@ -87,7 +92,11 @@ class PurchaseAnalytics(object):
                 # we are interested only on the first and last column \
                 # (i.e. product_id and department_id fields)
                 # convert department_id field to integer, for sorting purpose
-                self._products[row[0]] = int(row[3][:-1])       
+                try: # catch if integer conversion fails
+                    self._products[row[0]] = int(row[3][:-1])  
+                    
+                except ValueError:
+                    continue # continue reading next line
             
        
         
@@ -115,7 +124,7 @@ class PurchaseAnalytics(object):
                 
                 # write to file in the order (department_id, number of orders, 
                 # number of first orders, percentage)
-                report.write("{},{},{},{}\n".format(dep_id, stats[0], stats[1], stats[2]))
+                report.write("{},{},{},{:.2f}\n".format(dep_id, stats[0], stats[1], stats[2]))
         
     
     def find_order_statistics(self):
@@ -123,21 +132,42 @@ class PurchaseAnalytics(object):
         
         """
         
+        # variable to check if reorder is 0 or 1
+        is_reorder = None
+        
         for prod_id in self._products:
-            department_id = self._products[prod_id] 
-            is_reorder = self._order_products[prod_id]
+            department_id = self._products[prod_id]
+            
+            # check if product_id in products also exists in order_products
+            if prod_id in self._order_products:
+                is_reorder = self._order_products[prod_id] # get reorder (1 or 0)
+            else:
+                # there is no corresponding product_id number in order_products
+                continue # skip this product_id
+                
             
             if department_id in self.stat_per_department:
-                self.stat_per_department[department_id][0] += 1
-                if is_reorder==0:
-                    self.stat_per_department[department_id][1] += 1
+                
+                # check if reorder is valid (either 0 or 1)
+                if is_reorder == 0 or is_reorder ==1:
+                    # update number of orders
+                    self.stat_per_department[department_id][0] += 1
+                    
+                    # if reorder is 0, update number_of_first_orders
+                    if is_reorder==0:
+                        self.stat_per_department[department_id][1] += 1
                 
             else:
                 
-                self.stat_per_department[department_id] = [1,0,0]
-                
-                if is_reorder==0:
-                    self.stat_per_department[department_id][1] += 1
+                # check if reorder is valid (either 0 or 1)
+                if is_reorder == 0 or is_reorder == 1:
+                    # first time encountered department id
+                    # initialize it to a list, 
+                    # first element set to 1, valid reorder
+                    self.stat_per_department[department_id] = [1,0,0]
+                    
+                    if is_reorder==0:
+                        self.stat_per_department[department_id][1] += 1
                 
             
         
@@ -153,7 +183,7 @@ class PurchaseAnalytics(object):
         
         for department_id in self.stat_per_department:
             self.stat_per_department[department_id][2] = \
-            self.stat_per_department[department_id][1]/\
+            float(self.stat_per_department[department_id][1])/\
             self.stat_per_department[department_id][0]
     
     
